@@ -1,0 +1,12 @@
+name: DbExample
+main: ru.nukkit.dbexample.DbExample
+version: "0.0.1"
+author: fromgate, nukkit.ru
+api: ["1.0.0"]
+depend: [DbLib]
+description: DbExample (example of using DbLib, SQLite, MySQL databases)
+commands:
+  test:
+    aliases: ["dbtest"]
+    description: Run database tests
+    usage: "/dbtest"
