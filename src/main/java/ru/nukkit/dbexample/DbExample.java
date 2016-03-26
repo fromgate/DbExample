@@ -24,11 +24,11 @@ public class DbExample extends PluginBase {
         this.getDataFolder().mkdirs();
         this.saveResource("config.yml");
         this.reloadConfig();
-        this.host = this.getConfig().getNested("host","localhost");
-        this.port = this.getConfig().getNested("port","3306");
-        this.database = this.getConfig().getNested("database","world");
-        this.name = this.getConfig().getNested("name","nukkit");
-        this.password = this.getConfig().getNested("password","tikkun");
+        this.host = this.getConfig().getString("host","localhost");
+        this.port = this.getConfig().getString("port","3306");
+        this.database = this.getConfig().getString("database","world");
+        this.name = this.getConfig().getString("name","nukkit");
+        this.password = this.getConfig().getString("password","tikkun");
 
     }
 

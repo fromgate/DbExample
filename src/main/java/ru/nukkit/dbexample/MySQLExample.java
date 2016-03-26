@@ -1,5 +1,8 @@
 package ru.nukkit.dbexample;
 
+import cn.nukkit.Server;
+import ru.nukkit.dblib.DbLib;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +11,7 @@ public class MySQLExample {
 
     private static boolean enabled;
     public static boolean init(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            enabled = true;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            enabled = false;
-        }
+        enabled = (Server.getInstance().getPluginManager().getPlugin("DbLib")!=null);
         return enabled;
     }
 
@@ -29,17 +26,10 @@ public class MySQLExample {
 
     public static Connection connectToMySQL(String host, String port, String db, String name, String pwd){
         if (!enabled) return null;
-        String url = "jdbc:mysql://"+host+(port.isEmpty()? "" : ":"+port)+"/"+db;
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(url, name,pwd);
-        } catch (Exception e) {
-            DbExample.log("&cFailed to connect to MySQL");
-            DbExample.log("&cURL  : "+url);
-            DbExample.log("&cName : "+name);
-            DbExample.log("&cPass : "+pwd);
-            e.printStackTrace();
-        }
+        Connection connection = DbLib.getMySqlConnection(host,(port==null||port.isEmpty()? -1 : Integer.parseInt(port)),
+                db,name,pwd);
+
+        if (connection == null) enabled = false;
         return connection;
     }
 
@@ -77,7 +67,6 @@ public class MySQLExample {
         if (executeUpdate(query)) DbExample.log ("Table successfully created");
         else {
             DbExample.log ("&cFailed to create table!");
-            return;
         }
 
         query = "insert into dbtest2 (name,lastname) values ('bob','marley')";

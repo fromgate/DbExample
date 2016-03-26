@@ -1,7 +1,11 @@
 package ru.nukkit.dbexample;
 
-import java.io.File;
-import java.sql.*;
+import cn.nukkit.Server;
+import ru.nukkit.dblib.DbLib;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,13 +13,7 @@ public class SQLiteExample {
 
     private static boolean enabled;
     public static boolean init(){
-        try {
-            Class.forName("org.sqlite.JDBC");
-            enabled = true;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            enabled = false;
-        }
+        enabled = (Server.getInstance().getPluginManager().getPlugin("DbLib")!=null);
         return enabled;
     }
 
@@ -25,8 +23,9 @@ public class SQLiteExample {
 
     public static Connection connectToSQLite(String filename) throws SQLException {
         if (!enabled) return null;
-        String url = "jdbc:sqlite:"+DbExample.getPlugin().getDataFolder()+ File.separator+filename;
-        return DriverManager.getConnection(url);
+        Connection connection = DbLib.getSQLiteConnection(DbExample.getPlugin(),filename);
+        if (connection == null) enabled = false;
+        return connection;
     }
 
     public static boolean executeUpdate (String query) throws SQLException {
