@@ -1,6 +1,6 @@
 name: DbExample
 main: ru.nukkit.dbexample.DbExample
-version: "0.0.2"
+version: "0.0.3"
 author: fromgate, nukkit.ru
 api: ["1.0.0"]
 depend: [DbLib]

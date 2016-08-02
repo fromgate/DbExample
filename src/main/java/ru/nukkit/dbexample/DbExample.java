@@ -40,6 +40,7 @@ public class DbExample extends PluginBase {
         log("init ORMLite example : "+ORMLiteExample.init());
         log("init MySQL example   : "+MySQLExample.init());
         log("init SQLite example  : "+SQLiteExample.init());
+        log("init Sql2o example  : "+Sql2oExample.init());
     }
 
     @Override
@@ -60,6 +61,14 @@ public class DbExample extends PluginBase {
             try {
                 SQLiteExample.runTest();
             } catch (SQLException e) {
+                log ("&cFAIL!");
+                e.printStackTrace();
+            }
+
+            log("&6Test 4. Sql2o (DBlib configuration)");
+            try {
+                Sql2oExample.runTest();
+            } catch (Exception e) {
                 log ("&cFAIL!");
                 e.printStackTrace();
             }
