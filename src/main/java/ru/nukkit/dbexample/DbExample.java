@@ -5,15 +5,19 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.TextFormat;
+import ru.nukkit.dbexample.jdbc.MySQLExample;
+import ru.nukkit.dbexample.jdbc.SQLiteExample;
+import ru.nukkit.dbexample.ormlite.ORMLiteExample;
+import ru.nukkit.dbexample.sql2o.Sql2oExample;
 
 import java.sql.SQLException;
 
 public class DbExample extends PluginBase {
-    String host;
-    String port;
-    String database;
-    String name;
-    String password;
+    public String host;
+    public String port;
+    public String database;
+    public String name;
+    public String password;
 
     private static DbExample plugin;
     public static DbExample getPlugin(){
@@ -37,10 +41,10 @@ public class DbExample extends PluginBase {
         plugin = this;
         loadCfg();
         log("&eDbExample plugin started");
-        log("init ORMLite example : "+ORMLiteExample.init());
-        log("init MySQL example   : "+MySQLExample.init());
-        log("init SQLite example  : "+SQLiteExample.init());
-        log("init Sql2o example  : "+Sql2oExample.init());
+        log("init ORMLite example : "+ ORMLiteExample.init());
+        log("init MySQL example   : "+ MySQLExample.init());
+        log("init SQLite example  : "+ SQLiteExample.init());
+        log("init Sql2o example  : "+ Sql2oExample.init());
     }
 
     @Override

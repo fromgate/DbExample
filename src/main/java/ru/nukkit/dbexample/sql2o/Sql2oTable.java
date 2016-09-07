@@ -1,4 +1,4 @@
-package ru.nukkit.dbexample;
+package ru.nukkit.dbexample.sql2o;
 
 /**
  * Created by Igor on 02.08.2016.

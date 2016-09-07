@@ -1,6 +1,7 @@
-package ru.nukkit.dbexample;
+package ru.nukkit.dbexample.jdbc;
 
 import cn.nukkit.Server;
+import ru.nukkit.dbexample.DbExample;
 import ru.nukkit.dblib.DbLib;
 
 import java.sql.*;
@@ -36,8 +37,7 @@ public class MySQLExample {
     public static boolean executeUpdate (String query) throws SQLException {
         Connection  connection = connectToMySQL();
         if (connection == null) return false;
-        Statement statement = null;
-        statement = connection.prepareStatement(query);
+        Statement statement = connection.prepareStatement(query);
         statement.executeUpdate(query);
         if (statement!=null) statement.close();
         if (connection != null) connection.close();

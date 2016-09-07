@@ -1,4 +1,4 @@
-package ru.nukkit.dbexample;
+package ru.nukkit.dbexample.ormlite;
 
 
 import com.j256.ormlite.field.DatabaseField;

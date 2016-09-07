@@ -1,9 +1,10 @@
-package ru.nukkit.dbexample;
+package ru.nukkit.dbexample.ormlite;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import ru.nukkit.dbexample.DbExample;
 import ru.nukkit.dblib.DbLib;
 
 import java.sql.SQLException;

@@ -1,8 +1,9 @@
-package ru.nukkit.dbexample;
+package ru.nukkit.dbexample.sql2o;
 
 import cn.nukkit.Server;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import ru.nukkit.dbexample.DbExample;
 import ru.nukkit.dblib.DbLib;
 
 import java.util.List;
@@ -59,6 +60,7 @@ public class Sql2oExample {
         insertData("dima", "beeline");
 
 
+
         List<Sql2oTable> result = null;
         try (Connection con = sql2o.open()){
             result = con.createQuery(selectQuery).addParameter("name","dima").executeAndFetch(Sql2oTable.class);
@@ -70,6 +72,17 @@ public class Sql2oExample {
             DbExample.log ("Select query result:");
             for (Sql2oTable t: result) DbExample.log (t.name+" "+t.lastname);
         }
+
+
+        String query = "select lastname from sql2o_test where name=:name";
+        List<String> lastNames= null;
+        try (Connection con = sql2o.open()){
+            lastNames = con.createQuery(query).addParameter("name","dima").executeAndFetch(String.class);
+            con.close();
+        }
+
+
+
     }
 
 }

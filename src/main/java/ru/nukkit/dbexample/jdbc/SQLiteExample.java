@@ -1,6 +1,7 @@
-package ru.nukkit.dbexample;
+package ru.nukkit.dbexample.jdbc;
 
 import cn.nukkit.Server;
+import ru.nukkit.dbexample.DbExample;
 import ru.nukkit.dblib.DbLib;
 
 import java.sql.Connection;
