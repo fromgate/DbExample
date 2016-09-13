@@ -4,6 +4,7 @@ import cn.nukkit.Server;
 import ru.nukkit.dbexample.DbExample;
 import ru.nukkit.dblib.DbLib;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +26,7 @@ public class SQLiteExample {
 
     public static Connection connectToSQLite(String filename) throws SQLException {
         if (!enabled) return null;
-        Connection connection = DbLib.getSQLiteConnection(filename);
+        Connection connection = DbLib.getSQLiteConnection(new File(DbExample.getPlugin().getDataFolder() + File.separator +filename));
         if (connection == null) enabled = false;
         return connection;
     }
