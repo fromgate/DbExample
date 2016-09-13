@@ -13,8 +13,9 @@ import java.util.List;
 public class SQLiteExample {
 
     private static boolean enabled;
-    public static boolean init(){
-        enabled = (Server.getInstance().getPluginManager().getPlugin("DbLib")!=null);
+
+    public static boolean init() {
+        enabled = (Server.getInstance().getPluginManager().getPlugin("DbLib") != null);
         return enabled;
     }
 
@@ -24,13 +25,13 @@ public class SQLiteExample {
 
     public static Connection connectToSQLite(String filename) throws SQLException {
         if (!enabled) return null;
-        Connection connection = DbLib.getSQLiteConnection(DbExample.getPlugin(),filename);
+        Connection connection = DbLib.getSQLiteConnection(filename);
         if (connection == null) enabled = false;
         return connection;
     }
 
-    public static boolean executeUpdate (String query) throws SQLException {
-        Connection  connection = connectToSQLite();
+    public static boolean executeUpdate(String query) throws SQLException {
+        Connection connection = connectToSQLite();
         if (connection == null) return false;
         connection.createStatement().executeUpdate(query);
         if (connection != null) connection.close();
@@ -40,12 +41,12 @@ public class SQLiteExample {
 
     public static List<String> executeSelect(String query) throws SQLException {
         List<String> list = new ArrayList<String>();
-        Connection  connection = connectToSQLite();
+        Connection connection = connectToSQLite();
         if (connection == null) return list;
         ResultSet resultSet = connection.createStatement().executeQuery(query);
         if (resultSet == null) return null;
         while (resultSet.next()) {
-            list.add(resultSet.getString("name")+" "+resultSet.getString("lastname"));
+            list.add(resultSet.getString("name") + " " + resultSet.getString("lastname"));
         }
         if (connection != null) connection.close();
         return list;
@@ -58,20 +59,20 @@ public class SQLiteExample {
             return;
         }
         String query = "create table if not exists dbtest (name varchar(20), lastname varchar(20))";
-        if (executeUpdate(query)) DbExample.log ("Table successfully created");
+        if (executeUpdate(query)) DbExample.log("Table successfully created");
         else {
-            DbExample.log ("&cFailed to create table!");
+            DbExample.log("&cFailed to create table!");
             return;
         }
 
         query = "insert into dbtest (name,lastname) values ('bob','marley')";
-        if (executeUpdate(query)) DbExample.log("Query executed: "+query);
+        if (executeUpdate(query)) DbExample.log("Query executed: " + query);
         else DbExample.log("&cFailed to add record #1 to database");
         query = "insert into dbtest (name,lastname) values ('john','lennon')";
-        if (executeUpdate(query)) DbExample.log("Query executed: "+query);
+        if (executeUpdate(query)) DbExample.log("Query executed: " + query);
         else DbExample.log("&cFailed to add record #2 to database");
         query = "insert into dbtest (name,lastname) values ('dima','beeline')";
-        if (executeUpdate(query)) DbExample.log("Query executed: "+query);
+        if (executeUpdate(query)) DbExample.log("Query executed: " + query);
         else DbExample.log("&cFailed to add record #3 to database");
 
         query = "select * from dbtest where name='dima'";

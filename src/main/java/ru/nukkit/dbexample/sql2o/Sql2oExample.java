@@ -20,36 +20,35 @@ public class Sql2oExample {
     private final static String selectQuery = "select * from sql2o_test where name=:name";
 
 
-
     private static Sql2o sql2o;
-    public static boolean init(){
-        enabled = (Server.getInstance().getPluginManager().getPlugin("DbLib")!=null);
+
+    public static boolean init() {
+        enabled = (Server.getInstance().getPluginManager().getPlugin("DbLib") != null);
         if (!enabled) return false;
         sql2o = DbLib.getSql2o();
-        enabled = (sql2o!=null);
+        enabled = (sql2o != null);
         return enabled;
     }
 
 
-
-    public static void insertData(String name, String lastName){
-        try (Connection con = sql2o.open()){
-            con.createQuery(insetQuery).addParameter("name",name).addParameter("lastname",lastName).executeUpdate();
+    public static void insertData(String name, String lastName) {
+        try (Connection con = sql2o.open()) {
+            con.createQuery(insetQuery).addParameter("name", name).addParameter("lastname", lastName).executeUpdate();
             con.close();
-            DbExample.log ("Insert query: "+name+" "+lastName);
+            DbExample.log("Insert query: " + name + " " + lastName);
         }
     }
 
 
-    public static void runTest(){
+    public static void runTest() {
         if (!enabled) {
             DbExample.log("Failed to execute Sql2o test");
             return;
         }
-        try (Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             con.createQuery(createSQL).executeUpdate();
             con.close();
-            DbExample.log ("Table successfully created");
+            DbExample.log("Table successfully created");
         }
 
 
@@ -60,27 +59,25 @@ public class Sql2oExample {
         insertData("dima", "beeline");
 
 
-
         List<Sql2oTable> result = null;
-        try (Connection con = sql2o.open()){
-            result = con.createQuery(selectQuery).addParameter("name","dima").executeAndFetch(Sql2oTable.class);
+        try (Connection con = sql2o.open()) {
+            result = con.createQuery(selectQuery).addParameter("name", "dima").executeAndFetch(Sql2oTable.class);
             con.close();
         }
-        if (result == null) DbExample.log ("Select query returned null");
-        else if (result.isEmpty()) DbExample.log ("Select query returned nothing");
+        if (result == null) DbExample.log("Select query returned null");
+        else if (result.isEmpty()) DbExample.log("Select query returned nothing");
         else {
-            DbExample.log ("Select query result:");
-            for (Sql2oTable t: result) DbExample.log (t.name+" "+t.lastname);
+            DbExample.log("Select query result:");
+            for (Sql2oTable t : result) DbExample.log(t.name + " " + t.lastname);
         }
 
 
         String query = "select lastname from sql2o_test where name=:name";
-        List<String> lastNames= null;
-        try (Connection con = sql2o.open()){
-            lastNames = con.createQuery(query).addParameter("name","dima").executeAndFetch(String.class);
+        List<String> lastNames = null;
+        try (Connection con = sql2o.open()) {
+            lastNames = con.createQuery(query).addParameter("name", "dima").executeAndFetch(String.class);
             con.close();
         }
-
 
 
     }

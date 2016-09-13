@@ -16,9 +16,9 @@ public class ORMLiteExample {
     private static boolean enabled;
 
     private static ConnectionSource connectionSource;
-    private static Dao<DbTestTable,String> dao;
+    private static Dao<DbTestTable, String> dao;
 
-    public static boolean init(){
+    public static boolean init() {
         enabled = false;
         connectionSource = DbLib.getConnectionSource();
         if (connectionSource == null) {
@@ -26,8 +26,8 @@ public class ORMLiteExample {
             return false;
         }
         try {
-            dao = DaoManager.createDao(connectionSource,DbTestTable.class);
-            TableUtils.createTableIfNotExists(connectionSource,DbTestTable.class);
+            dao = DaoManager.createDao(connectionSource, DbTestTable.class);
+            TableUtils.createTableIfNotExists(connectionSource, DbTestTable.class);
         } catch (SQLException e) {
             DbExample.log("&cFailed to create table");
             e.printStackTrace();
@@ -37,45 +37,43 @@ public class ORMLiteExample {
         return true;
     }
 
-    public static void runTest (){
-        addEntry("bob","marley");
-        addEntry("john","lennon");
-        addEntry("dima","beeline");
+    public static void runTest() {
+        addEntry("bob", "marley");
+        addEntry("john", "lennon");
+        addEntry("dima", "beeline");
         List<String> list = getByName("dima");
         if (list.isEmpty()) DbExample.log("&cNo records found in table");
-        else for (String s : list) DbExample.log (s);
+        else for (String s : list) DbExample.log(s);
     }
 
 
-    public static void addEntry (String name, String lastname){
+    public static void addEntry(String name, String lastname) {
         if (!enabled) return;
-        DbTestTable record = new DbTestTable(name,lastname);
+        DbTestTable record = new DbTestTable(name, lastname);
         try {
             dao.create(record);
-            DbExample.log("Record saved to database ("+name+", "+lastname+")");
+            DbExample.log("Record saved to database (" + name + ", " + lastname + ")");
         } catch (SQLException e) {
-            DbExample.log("&cFailed to save record to database ("+name+", "+lastname+")");
+            DbExample.log("&cFailed to save record to database (" + name + ", " + lastname + ")");
             e.printStackTrace();
         }
     }
 
-    public static List<String> getByName (String name){
+    public static List<String> getByName(String name) {
         List<String> list = new ArrayList<String>();
         if (!enabled) return list;
         List<DbTestTable> records = null;
         try {
-            records = dao.queryForEq("name",name);
+            records = dao.queryForEq("name", name);
         } catch (SQLException e) {
             e.printStackTrace();
             return list;
         }
-        for (DbTestTable record: records)
-            list.add(record.getName()+" "+record.getLastname());
+        for (DbTestTable record : records)
+            list.add(record.getName() + " " + record.getLastname());
 
         return list;
     }
-
-
 
 
 }
